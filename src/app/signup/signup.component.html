@@ -1,0 +1,31 @@
+<div class="signup-card">
+<mat-toolbar>
+  <span>SignUp</span>
+</mat-toolbar>
+<mat-card>
+   <mat-card-content>
+	  <form [formGroup]="signupForm" (ngSubmit)="signup()" class="signup-form">	  
+	    <mat-form-field class="full-width">
+	      <input matInput placeholder="Ingrese Email" formControlName="email" required>
+	      <mat-error *ngIf="signupForm.get('email').dirty">Email Invalido</mat-error>
+	    </mat-form-field>
+	    <mat-form-field class="full-width">
+	      <input matInput placeholder="Ingrese Password" type="password" formControlName="password" required>
+	      <mat-error *ngIf="signupForm.get('password').dirty">Password Invalida</mat-error>
+	    </mat-form-field>
+
+	    <mat-form-field class="full-width">
+			<mat-select placeholder="Selecione Tipo" formControlName="type">
+			  <mat-option value="admin">Admin</mat-option>
+			  <mat-option value="client">Cliente</mat-option>
+			</mat-select>
+			<mat-error *ngIf="signupForm.get('type').dirty">Requerido</mat-error>
+		</mat-form-field>
+
+	    <button  mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid">Registrarse</button>
+	    <p class="register-link"><span><a routerLink="/">Login</a></span></p>
+
+	  </form>
+   </mat-card-content>
+</mat-card>
+</div>

@@ -1,0 +1,23 @@
+<div *ngIf="authService.user && authService.profile">
+  <mat-toolbar>
+    <nav>
+      <a routerLink="/home">Home</a>
+      <a routerLink="/pets">Macotas</a>
+      <a routerLink="/appoinments">Turnos</a>
+    </nav>
+
+    <!-- This fills the remaining space of the current row -->
+   <span class="fill-remaining-space"></span>
+
+    <span>
+      <button mat-raised-button color="accent" (click)="logout()" *ngIf="authService.user">
+        <span>Logout</span>
+      </button>
+    </span>
+
+  </mat-toolbar>
+  <div class="sub-nav">
+    <span>user: {{ authService.user.email }} tipo:{{authService.profile.role}}</span>
+  </div>
+  
+</div>

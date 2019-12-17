@@ -1,0 +1,27 @@
+mat-toolbar {
+	background-color: #676acc;
+}
+
+mat-toolbar > nav {
+	margin-left: 1em;
+}
+
+mat-toolbar > nav > a {
+    margin-left: 1em;
+    color: white;
+    text-decoration: none;
+}
+
+.fill-remaining-space {
+	/* This fills the remaining space, by using flexbox. 
+	   Every toolbar row uses a flexbox row layout. */
+	flex: 1 1 auto;
+}
+
+.sub-nav {
+	background-color: #b0b2ff;
+}
+.sub-nav > span {
+	margin-left: 3.5em;
+	height: 2em;
+}

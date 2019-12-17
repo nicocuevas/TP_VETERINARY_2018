@@ -1,0 +1,108 @@
+<div class="">
+<mat-toolbar>
+  <span>Agregar / Modificar</span>
+</mat-toolbar>
+<mat-card>
+   <mat-card-content>
+	  <form [formGroup]="petForm" (ngSubmit)="addPet()" class="pets-form">	
+	    <mat-form-field class="full-width">
+			<mat-select placeholder="animal" formControlName="animal">
+			  <mat-option value="perro">perro</mat-option>
+			  <mat-option value="gato">gato</mat-option>
+			  <mat-option value="huron">huron</mat-option>
+			</mat-select>
+			<mat-error *ngIf="petForm.get('animal').dirty">Requerido</mat-error>
+		</mat-form-field>  
+	    <mat-form-field class="full-width">
+	      <input matInput placeholder="nombre" formControlName="nombre" required>
+	      <mat-error *ngIf="petForm.get('nombre').dirty">nombre</mat-error>
+	    </mat-form-field>
+	    <mat-form-field class="full-width">
+	      <input matInput placeholder="raza" formControlName="raza" required>
+	      <mat-error *ngIf="petForm.get('raza').dirty">raza</mat-error>
+	    </mat-form-field>
+	    <mat-form-field class="full-width">
+	    	<mat-label>select dueno</mat-label>
+			<mat-select  [(value)]="selectedDueno" (selectionChange)="selectDueno($event)">
+			  <mat-option 
+			  	*ngFor="let u of usersList | async" [value]="u.username"
+			  	>{{u.username}}</mat-option>
+			</mat-select>
+			<mat-error *ngIf="petForm.get('dueno').dirty">Requerido</mat-error>
+		</mat-form-field>
+	    <img src="{{petForm.get('foto').value}}" alt="" width="100" height="100"> 
+		<div class="full-width">
+		  <div *ngIf="uploadingImage">uploading image {{ uploadPercent | async }}%</div>
+	      <input type="file" placeholder="foto" (change)="uploadFile($event)"required>
+	    </div>
+	    <button  mat-raised-button color="accent" *ngIf="!edit" 
+	    type="submit" [disabled]="!petForm.valid">Agregar</button>
+	    <button  mat-raised-button color="accent" *ngIf="edit" (click)="updatePet()"
+	    type="button" [disabled]="!petForm.valid">Guardar</button>
+	    <button  mat-raised-button color="primary" *ngIf="edit" (click)="clear()"
+	    type="button">Cancelar</button>
+	  </form>
+   </mat-card-content>
+</mat-card>
+
+<mat-toolbar>
+  <span>Lista</span>
+</mat-toolbar>
+<mat-card>
+	<table mat-table [dataSource]="petsList" class="mat-elevation-z8">
+	  <!-- Position Column -->
+	  <!-- 	  
+		<ng-container matColumnDef="id">
+	    <th mat-header-cell *matHeaderCellDef> id. </th>
+	    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+	  </ng-container> -->
+
+	  <!-- Name Column -->
+	  <ng-container matColumnDef="nombre">
+	    <th mat-header-cell *matHeaderCellDef> nombre </th>
+	    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+	  </ng-container>
+
+	  <!-- Weight Column -->
+	  <ng-container matColumnDef="animal">
+	    <th mat-header-cell *matHeaderCellDef> animal </th>
+	    <td mat-cell *matCellDef="let element"> {{element.animal}} </td>
+	  </ng-container>
+
+	  <!-- Symbol Column -->
+	  <ng-container matColumnDef="raza">
+	    <th mat-header-cell *matHeaderCellDef> raza </th>
+	    <td mat-cell *matCellDef="let element"> {{element.raza}} </td>
+	  </ng-container>
+
+	  <!-- Symbol Column -->
+	  <ng-container matColumnDef="dueno">
+	    <th mat-header-cell *matHeaderCellDef> dueno </th>
+	    <td mat-cell *matCellDef="let element"> {{element.dueno}} </td>
+	  </ng-container>
+
+	  <!-- Symbol Column -->
+	  <ng-container matColumnDef="foto">
+	    <th mat-header-cell *matHeaderCellDef> foto </th>
+	    <td mat-cell *matCellDef="let element">
+	     <img src="{{element.foto}}" alt="" width="100" height="100"> 
+	    </td>
+	  </ng-container>
+
+	   <ng-container matColumnDef="accion">
+	    <th mat-header-cell *matHeaderCellDef> Accion </th>
+	    <td mat-cell *matCellDef="let element">
+	    	<button mat-raised-button color="primary" (click)="editar(element)">
+		        <span>editar</span>
+		    </button>
+		    <button mat-raised-button color="warn" (click)="eliminar(element)">
+		        <span>eliminar</span>
+		    </button>
+	    </td>
+	  </ng-container>
+
+	  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table>
+</mat-card>
+</div>
